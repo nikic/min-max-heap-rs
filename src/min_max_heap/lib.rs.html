@@ -10,8 +10,11 @@
     <title>lib.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -548,9 +558,6 @@
 <span id="502">502</span>
 <span id="503">503</span>
 <span id="504">504</span>
-<span id="505">505</span>
-<span id="506">506</span>
-<span id="507">507</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! A double-ended priority queue.</span>
 <span class="doccomment">//!</span>
@@ -583,9 +590,6 @@
 <span class="doccomment">//! library.</span>
 
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
-
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;clippy&quot;</span>, <span class="ident">feature</span>(<span class="ident">plugin</span>))]</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;clippy&quot;</span>, <span class="ident">plugin</span>(<span class="ident">clippy</span>))]</span>
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">FromIterator</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">mem</span>, <span class="ident">slice</span>, <span class="ident">vec</span>};
@@ -655,7 +659,7 @@
             <span class="number">0</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
             <span class="number">1</span> <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="number">0</span>),
             <span class="number">2</span> <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="number">1</span>),
-            _ <span class="op">=&gt;</span> <span class="kw">if</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>[<span class="number">1</span>] <span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>[<span class="number">2</span>] { <span class="prelude-val">Some</span>(<span class="number">1</span>) } <span class="kw">else</span> { <span class="prelude-val">Some</span>(<span class="number">2</span>) }
+            _ <span class="op">=&gt;</span> <span class="kw">if</span> <span class="self">self</span>.<span class="number">0</span>[<span class="number">1</span>] <span class="op">&gt;</span> <span class="self">self</span>.<span class="number">0</span>[<span class="number">2</span>] { <span class="prelude-val">Some</span>(<span class="number">1</span>) } <span class="kw">else</span> { <span class="prelude-val">Some</span>(<span class="number">2</span>) }
         }
     }
 
@@ -696,7 +700,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_pop_min</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">element</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_empty</span>() { <span class="kw">return</span> <span class="ident">element</span>; }
 
-        <span class="kw">if</span> <span class="kw-2">&amp;</span><span class="ident">element</span> <span class="op">&lt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>[<span class="number">0</span>] { <span class="kw">return</span> <span class="ident">element</span>; }
+        <span class="kw">if</span> <span class="ident">element</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="number">0</span>[<span class="number">0</span>] { <span class="kw">return</span> <span class="ident">element</span>; }
 
         <span class="ident">mem</span>::<span class="ident">swap</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">element</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="number">0</span>[<span class="number">0</span>]);
         <span class="self">self</span>.<span class="ident">trickle_down_min</span>(<span class="number">0</span>);
@@ -710,7 +714,7 @@
     <span class="doccomment">/// not allocate.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_pop_max</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">element</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">find_max</span>() {
-            <span class="kw">if</span> <span class="kw-2">&amp;</span><span class="ident">element</span> <span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>[<span class="ident">i</span>] { <span class="kw">return</span> <span class="ident">element</span> }
+            <span class="kw">if</span> <span class="ident">element</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="number">0</span>[<span class="ident">i</span>] { <span class="kw">return</span> <span class="ident">element</span> }
 
             <span class="ident">mem</span>::<span class="ident">swap</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">element</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="number">0</span>[<span class="ident">i</span>]);
             <span class="self">self</span>.<span class="ident">trickle_down_max</span>(<span class="ident">i</span>);
@@ -1073,20 +1077,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
